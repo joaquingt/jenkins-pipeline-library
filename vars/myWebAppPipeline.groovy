@@ -3,8 +3,8 @@ def call(Map config = [:]) {
         agent any
         
         environment {
-            APP_NAME = config.appName ?: 'my-first-app'
-            DOCKER_PORT = config.dockerPort ?: '3001'
+            APP_NAME = "${config.appName ?: 'my-first-app'}"
+            DOCKER_PORT = "${config.dockerPort ?: '3001'}"
             IMAGE_TAG = "${env.BUILD_NUMBER}"
         }
         
