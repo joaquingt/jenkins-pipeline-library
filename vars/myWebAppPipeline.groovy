@@ -9,6 +9,32 @@ def call(Map config = [:]) {
         }
         
         stages {
+            stage('Setup Docker') {
+                steps {
+                    script {
+                        // Check if docker is available
+                        def dockerExists = sh(script: 'which docker', returnStatus: true) == 0
+                        
+                        if (!dockerExists) {
+                            echo "📦 Installing Docker CLI..."
+                            sh '''
+                                apt-get update
+                                apt-get install -y ca-certificates curl gnupg lsb-release
+                                mkdir -p /etc/apt/keyrings
+                                curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+                                echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+                                apt-get update
+                                apt-get install -y docker-ce-cli curl
+                            '''
+                        }
+                        
+                        // Verify Docker is working
+                        sh 'docker --version'
+                        echo "✅ Docker CLI available"
+                    }
+                }
+            }
+            
             stage('Checkout') {
                 steps {
                     echo "🔄 Checking out code for ${env.APP_NAME}..."
