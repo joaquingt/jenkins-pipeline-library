@@ -68,6 +68,7 @@ def call(Map config = [:]) {
                         def imageName = "${env.APP_NAME}:${env.IMAGE_TAG}"
                         
                         // Build image using shell command instead of docker.build()
+                        sh "whoami"
                         sh "docker build -t ${imageName} ."
                         echo "✅ Built image: ${imageName}"
                         
