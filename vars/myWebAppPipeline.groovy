@@ -18,6 +18,7 @@ def call(Map config = [:]) {
                         if (!dockerExists) {
                             echo "📦 Installing Docker CLI..."
                             sh '''
+                                whoami
                                 apt-get update
                                 apt-get install -y ca-certificates curl gnupg lsb-release
                                 mkdir -p /etc/apt/keyrings
