@@ -177,6 +177,8 @@ def call(Map config = [:]) {
                 echo "✅ Pipeline succeeded!"
                 script {
                     currentBuild.description = "✅ Deployed ${env.APP_NAME}:${env.IMAGE_TAG} on port ${env.DOCKER_PORT}"
+                    sh "docker stop ${env.APP_NAME} || true"
+                    sh "docker rm ${env.APP_NAME} || true"
                 }
             }
             failure {
