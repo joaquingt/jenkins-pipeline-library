@@ -2,7 +2,7 @@ def call(Map config = [:]) {
     pipeline {
         agent {
             docker {
-                image 'jenkins-agent:latest'
+                image 'mylocal/jenkins-agent:latest'
                 label 'docker-agent'
             } 
         }
