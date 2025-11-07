@@ -141,7 +141,11 @@ def call(Map config = [:]) {
                                 echo "⚠️ Health check failed, but container is running"
                                 echo "🔍 Container logs:"
                                 sh "docker logs ${env.APP_NAME} || true"
-                            }
+                                def controllerIp = InetAddress.localHost.hostAddress
+                                def agentIp = sh(script: "hostname -I | awk '{print $1}'", returnStdout: true).trim()
+                                echo "Controller IP: ${controllerIp}"
+                                echo "Agent IP: ${agentIp}"
+                                                    }
                         } else {
                             echo "❌ Container is not running"
                             sh "docker logs ${env.APP_NAME} || true"
