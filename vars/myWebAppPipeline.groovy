@@ -2,7 +2,8 @@ def call(Map config = [:]) {
     pipeline {
         agent {
             docker {
-                label 'docker-agent'  // This uses your pre-configured Docker template
+                label 'docker-agent'
+            } 
         }
         environment {
             APP_NAME = "${config.appName ?: 'my-first-app'}"
