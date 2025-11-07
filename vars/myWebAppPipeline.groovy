@@ -1,9 +1,10 @@
 def call(Map config = [:]) {
     pipeline {
-    agent {
-        docker {
-            label 'docker-agent'      // ...OR use a pre-defined template label.
-        }        
+        agent {
+            docker {
+                label 'docker-agent'      // ...OR use a pre-defined template label.
+            } 
+        }
         environment {
             APP_NAME = "${config.appName ?: 'my-first-app'}"
             DOCKER_PORT = "${config.dockerPort ?: '3001'}"
@@ -18,7 +19,7 @@ def call(Map config = [:]) {
                         def dockerExists = sh(script: 'which docker', returnStatus: true) == 0
                         
                         if (!dockerExists) {
-                           echo "📦 Docker not installed"
+                        echo "📦 Docker not installed"
                         }
                         
                         // Verify Docker is working
@@ -188,5 +189,4 @@ def call(Map config = [:]) {
             }
         }
     }
-  }
-}
+ }
