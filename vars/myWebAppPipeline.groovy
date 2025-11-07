@@ -2,8 +2,7 @@ def call(Map config = [:]) {
     pipeline {
         agent {
             docker {
-                image 'docker.home.vaporgt.com/docker-local/jenkins-agent:latest' // Use a Docker image with Docker CLI installed
-            } 
+                label 'docker-agent'  // This uses your pre-configured Docker template
         }
         environment {
             APP_NAME = "${config.appName ?: 'my-first-app'}"
