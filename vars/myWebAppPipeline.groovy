@@ -133,7 +133,7 @@ def call(Map config = [:]) {
                             def controllerIp = InetAddress.localHost.hostAddress
                             def agentIp = sh(script: "hostname -I | awk '{print \$1}'", returnStdout: true).trim()                            
                             def healthCheck = sh(
-                                script: "curl -f http://${controllerIp}:${env.DOCKER_PORT} || exit 1",
+                                script: "curl -f http://${agentIp}:${env.DOCKER_PORT} || exit 1",
                                 returnStatus: true
                             )
                             
