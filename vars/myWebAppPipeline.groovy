@@ -130,8 +130,10 @@ def call(Map config = [:]) {
                             echo "✅ Container is running: ${containerRunning}"
                             
                             // Try health check with curl
+                            def controllerIp = InetAddress.localHost.hostAddress
+                            def agentIp = sh(script: "hostname -I | awk '{print \$1}'", returnStdout: true).trim()                            
                             def healthCheck = sh(
-                                script: "curl -f http://localhost:${env.DOCKER_PORT} || exit 1",
+                                script: "curl -f http://${controllerIp}:${env.DOCKER_PORT} || exit 1",
                                 returnStatus: true
                             )
                             
