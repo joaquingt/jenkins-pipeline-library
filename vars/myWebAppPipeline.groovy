@@ -77,11 +77,13 @@ def call(Map config = [:]) {
                         echo "✅ Built image: ${imageName}"
                         
                         // Tag as latest
-                        sh "docker tag ${imageName} ${env.APP_NAME}:latest"
+                        sh "docker tag ${imageName} artifactory.home.vaporgt.com/docker-local/${env.APP_NAME}:latest"
                         echo "✅ Tagged as: ${env.APP_NAME}:latest"
                         
                         // List images to verify
                         sh "docker images ${env.APP_NAME}"
+                        sh "docker push artifactory.home.vaporgt.com/docker-local/${env.APP_NAME}:latest"
+                        echo "✅ Pushed latest image to Artifactory"
                     }
                 }
             }
